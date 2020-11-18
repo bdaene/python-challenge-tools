@@ -63,3 +63,17 @@ def factorize_rho(n):
     factorization.update(factorize_rho(d))
     factorization.update(factorize_rho(n // d))
     return factorization
+
+
+def get_factorization_under(n):
+    """ Get the factorization of all integers under n using a sieve """
+    factorizations = [Counter() for _ in range(n)]
+    for prime in range(2, n):
+        if len(factorizations[prime]) > 0:
+            continue
+        power = prime
+        while power < n:
+            for multiple in range(power, n, power):
+                factorizations[multiple][prime] += 1
+            power *= prime
+    return factorizations
