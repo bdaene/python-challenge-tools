@@ -35,3 +35,17 @@ def get_inv_mods(m, n=None):
         d, r = divmod(m, i)
         inv.append(-d * inv[r] % m)
     return inv
+
+
+def solve_chinese_remainders(remainders):
+    """Returns a solution of the set of equations in remainders using the Chinese remainder theorem.
+    :param remainders iterables of pairs (rest, modulo) in equation x = rest mod modulo
+    modulo have to be coprimes"""
+    ppcm = 1
+    for rest, modulo in remainders:
+        ppcm *= modulo
+    x = 0
+    for rest, modulo in remainders:
+        s = ppcm // modulo
+        x += rest * s * inv_mod(s, modulo)
+    return x % ppcm
