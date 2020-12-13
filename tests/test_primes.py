@@ -25,8 +25,9 @@ def test_gen_primes(n):
 @pytest.mark.parametrize("n, prime", [
     (13, True),
     (14, False),
+    (31, True),
     (484845637, True),
-    (484846079 * 484844609, False)
+    (484846079 * 484844609, False),
 ])
 def test_is_probable_prime(n, prime):
     assert prime == is_probable_prime(n)

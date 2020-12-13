@@ -2,7 +2,7 @@
 
 import pytest
 
-from euclide import gcd, gcde, inv_mod, get_inv_mods
+from euclide import gcd, gcde, inv_mod, get_inv_mods, solve_chinese_remainders
 
 
 @pytest.mark.parametrize("a, b, d", [
@@ -60,3 +60,12 @@ def test_get_inv_mods(m, n):
 
     assert None not in inv[1:]
     assert all(a * b % m == 1 for a, b in enumerate(inv[1:], 1))
+
+
+@pytest.mark.parametrize("remainders, expected_result", [
+    ([], 0),
+    ([(7, 13)], 7),
+    ([(31 % 13, 13), (31 % 19, 19)], 31)
+])
+def test_chinese_remainders(remainders, expected_result):
+    assert expected_result == solve_chinese_remainders(remainders)

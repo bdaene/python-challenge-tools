@@ -9,7 +9,7 @@ def comb_mod(n, r, mod):
     while r > 0:
         r, rm = divmod(r, mod)
         n, nm = divmod(n, mod)
-        c *= comb(rm, nm)
+        c *= comb(nm, rm)
         c %= mod
     return c
 
