@@ -47,3 +47,41 @@ def timeit(func, file=stdout):
 
     wrapper.func = func
     return wrapper
+
+
+class DisjointSets:
+    """Efficient disjoint sets (also named union-find or merge-find) structure."""
+
+    def __init__(self):
+        self.node_sizes = {}
+        self.node_parents = {}
+
+    def make_set(self, x):
+        """Add a new element in its own set to the disjoint sets."""
+        if x not in self.node_sizes:
+            self.node_sizes[x] = 1
+            self.node_parents[x] = x
+
+    def find(self, x):
+        """Find the representative element of the set containing the element x."""
+        root = x
+        while self.node_parents[root] != root:
+            root = self.node_parents[root]
+        while x != root:
+            parent = self.node_parents[x]
+            self.node_parents[x] = root
+            x = parent
+        return root
+
+    def merge(self, x, y):
+        """Merge the set containing the element x with the set containing the element y."""
+        x = self.find(x)
+        y = self.find(y)
+
+        if x == y:
+            return
+
+        if self.node_sizes[x] < self.node_sizes[y]:
+            x, y = y, x
+        self.node_parents[y] = x
+        self.node_sizes[x] += self.node_sizes[y]
